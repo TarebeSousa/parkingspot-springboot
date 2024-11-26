@@ -1,0 +1,53 @@
+package com.tarebe.parkingspot.models;
+
+import com.tarebe.parkingspot.models.enums.ParkingSpotStatus;
+import com.tarebe.parkingspot.models.enums.ParkingSpotType;
+import jakarta.persistence.*;
+
+import java.io.Serializable;
+import java.util.UUID;
+
+@Entity
+@Table(name = "tb_parking_spot")
+public class ParkingSpotModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
+
+    private ParkingSpotStatus status;
+    private ParkingSpotType type;
+
+    public ParkingSpotModel() {
+    }
+
+    public ParkingSpotModel(ParkingSpotStatus status) {
+        this.status = status;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public ParkingSpotStatus getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(ParkingSpotStatus status) {
+        this.status = status;
+    }
+
+    public ParkingSpotType getType() {
+        return type;
+    }
+
+    public void setType(ParkingSpotType type) {
+        this.type = type;
+    }
+}
