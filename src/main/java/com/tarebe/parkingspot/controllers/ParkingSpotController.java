@@ -2,6 +2,7 @@ package com.tarebe.parkingspot.controllers;
 
 import com.tarebe.parkingspot.dtos.ParkingSpotDto;
 import com.tarebe.parkingspot.models.ParkingSpotModel;
+import com.tarebe.parkingspot.models.factories.ParkingSpotFactory;
 import com.tarebe.parkingspot.services.ParkingSpotService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -11,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -24,13 +24,15 @@ public class ParkingSpotController {
     @PostMapping("/parking-spot")
     public ResponseEntity<ParkingSpotModel> saveParkingSpot(@RequestBody @Valid ParkingSpotDto parkingSpotDto){
         var parkingSpot = new ParkingSpotModel();
-        BeanUtils.copyProperties(parkingSpotDto, parkingSpot);
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(parkingSpot));
+        ParkingSpotFactory.convertToModel(parkingSpotDto, parkingSpot);
+        var savedParkingSpot = service.save(parkingSpot);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedParkingSpot);
     }
 
     @GetMapping("/parking-spot")
     public ResponseEntity<List<ParkingSpotModel>> getAll(){
-        return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
+        List<ParkingSpotModel> parkingSpotList = service.getAll();
+        return ResponseEntity.status(HttpStatus.OK).body(parkingSpotList);
     }
 
     @DeleteMapping("/parking-spot/{id}")
@@ -48,18 +50,20 @@ public class ParkingSpotController {
         if(!service.existsById(id)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(service.getOne(id));
+        var parkingSpot = service.getOne(id) ;
+        return ResponseEntity.status(HttpStatus.OK).body(parkingSpot);
     }
 
     @PutMapping("/parking-spot/{id}")
-    public ResponseEntity<Object> updateProduct(@PathVariable(value="id") UUID id,
+    public ResponseEntity<Object> update(@PathVariable(value="id") UUID id,
                                                 @RequestBody @Valid ParkingSpotDto parkingSpotDto){
         if(!service.existsById(id)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
         }
         var parkingSpotModel = service.findById(id);
-        BeanUtils.copyProperties(parkingSpotDto, parkingSpotModel);
-        return ResponseEntity.status(HttpStatus.OK).body(service.update(parkingSpotModel));
+        ParkingSpotFactory.convertToModel(parkingSpotDto, parkingSpotModel);
+        var updatedParkingSpot = service.update(parkingSpotModel);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedParkingSpot);
     }
 
 }

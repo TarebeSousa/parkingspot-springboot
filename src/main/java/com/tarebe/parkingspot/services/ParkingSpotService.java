@@ -4,7 +4,6 @@ import com.tarebe.parkingspot.dtos.ParkingSpotDto;
 import com.tarebe.parkingspot.models.ParkingSpotModel;
 import com.tarebe.parkingspot.repositories.ParkingSpotRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,4 +49,6 @@ public class ParkingSpotService {
         Optional<ParkingSpotModel> obj = repository.findById(id);
         return obj.get();
     }
+
+
 }
