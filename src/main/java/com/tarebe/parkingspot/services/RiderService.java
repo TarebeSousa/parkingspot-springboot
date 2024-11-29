@@ -39,7 +39,6 @@ public class RiderService {
         return repository.save(RiderModel);
     }
 
-
     public boolean existsById(UUID id){
         return repository.existsById(id);
     }
@@ -48,6 +47,5 @@ public class RiderService {
         Optional<RiderModel> obj = repository.findById(id);
         return obj.get();
     }
-
 
 }
