@@ -1,6 +1,5 @@
 package com.tarebe.parkingspot.services;
 
-import com.tarebe.parkingspot.dtos.ParkingSpotDto;
 import com.tarebe.parkingspot.models.ParkingSpotModel;
 import com.tarebe.parkingspot.repositories.ParkingSpotRepository;
 import jakarta.transaction.Transactional;
