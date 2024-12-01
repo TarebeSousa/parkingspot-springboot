@@ -23,6 +23,12 @@ public class ParkingSpotModel implements Serializable {
     public ParkingSpotModel() {
     }
 
+    public ParkingSpotModel(UUID id, ParkingSpotStatus status, ParkingSpotType type) {
+        this.id = id;
+        this.status = status;
+        this.type = type;
+    }
+
     public ParkingSpotModel(ParkingSpotStatus status) {
         this.status = status;
     }
