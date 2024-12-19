@@ -17,6 +17,12 @@ public class VehicleModel implements Serializable {
     VehicleType vehicleType;
     String liencePlate;
 
+    public VehicleModel(UUID id, VehicleType vehicleType, String liencePlate) {
+        this.id = id;
+        this.vehicleType = vehicleType;
+        this.liencePlate = liencePlate;
+    }
+
     public VehicleModel(){
 
     }

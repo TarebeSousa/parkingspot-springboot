@@ -16,6 +16,12 @@ public class RiderModel implements Serializable {
     private String name;
     private String cnh;
 
+    public RiderModel(UUID id, String name, String cnh) {
+        this.id = id;
+        this.name = name;
+        this.cnh = cnh;
+    }
+
     public RiderModel(){
 
     }
