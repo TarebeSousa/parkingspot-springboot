@@ -1,8 +1,13 @@
 package com.tarebe.parkingspot.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,6 +20,10 @@ public class RiderModel implements Serializable {
     private UUID id;
     private String name;
     private String cnh;
+
+    @JsonIgnoreProperties("rider")
+    @OneToMany(mappedBy = "rider", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<VehicleModel> vehicles = new ArrayList<>();
 
     public RiderModel(UUID id, String name, String cnh) {
         this.id = id;
@@ -48,5 +57,9 @@ public class RiderModel implements Serializable {
 
     public void setCnh(String cnh) {
         this.cnh = cnh;
+    }
+
+    public List<VehicleModel> getVehicles() {
+        return vehicles;
     }
 }

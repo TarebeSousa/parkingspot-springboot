@@ -29,13 +29,19 @@ public class TestConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        // Criar ParkingSpot
         ParkingSpotModel ps = new ParkingSpotModel(null, ParkingSpotStatus.FREE, ParkingSpotType.CAR);
         parkingSpotRepository.save(ps);
 
+        // Criar veículo
         VehicleModel vm = new VehicleModel(null, VehicleType.TRUCK, "123456789");
-        vehicleRepository.save(vm);
 
-        RiderModel rm = new RiderModel(null,"Marcos Oliveira", "01245879621");
+        // Criar rider e associar veículo
+        RiderModel rm = new RiderModel(null, "Marcos Oliveira", "01245879621");
+        rm.getVehicles().add(vm);
+        vm.setRider(rm);
+
+        // Salvar rider (Cascade.ALL salva o veículo automaticamente)
         riderRepository.save(rm);
     }
 }

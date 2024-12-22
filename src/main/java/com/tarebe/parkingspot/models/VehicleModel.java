@@ -1,5 +1,7 @@
 package com.tarebe.parkingspot.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tarebe.parkingspot.models.enums.VehicleType;
 import jakarta.persistence.*;
 
@@ -16,6 +18,11 @@ public class VehicleModel implements Serializable {
     UUID id;
     VehicleType vehicleType;
     String liencePlate;
+
+    @ManyToOne
+    @JoinColumn(name = "rider_id")
+    @JsonIgnoreProperties("vehicles")
+    private RiderModel rider;
 
     public VehicleModel(UUID id, VehicleType vehicleType, String liencePlate) {
         this.id = id;
@@ -49,5 +56,13 @@ public class VehicleModel implements Serializable {
 
     public void setLiencePlate(String liencePlate) {
         this.liencePlate = liencePlate;
+    }
+
+    public RiderModel getRider() {
+        return rider;
+    }
+
+    public void setRider(RiderModel rider) {
+        this.rider = rider;
     }
 }

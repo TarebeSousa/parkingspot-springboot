@@ -3,6 +3,7 @@ package com.tarebe.parkingspot.controllers;
 
 import com.tarebe.parkingspot.dtos.RiderDto;
 import com.tarebe.parkingspot.models.RiderModel;
+import com.tarebe.parkingspot.models.VehicleModel;
 import com.tarebe.parkingspot.models.factories.RiderFactory;
 import com.tarebe.parkingspot.services.RiderService;
 import jakarta.validation.Valid;
