@@ -2,8 +2,11 @@ package com.tarebe.parkingspot.controllers;
 
 
 import com.tarebe.parkingspot.dtos.VehicleDto;
+import com.tarebe.parkingspot.models.RiderModel;
 import com.tarebe.parkingspot.models.VehicleModel;
+import com.tarebe.parkingspot.models.factories.RiderFactory;
 import com.tarebe.parkingspot.models.factories.VehicleFactory;
+import com.tarebe.parkingspot.services.RiderService;
 import com.tarebe.parkingspot.services.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +24,23 @@ public class VehicleController {
     @Autowired
     private VehicleService service;
 
+    @Autowired
+    private VehicleFactory vehicleFactory;
+
+    @Autowired
+    RiderService riderService;
+
     @PostMapping("/vehicle")
-    public ResponseEntity<VehicleModel> saveVehicle(@RequestBody @Valid VehicleDto vehicleDto){
+    public ResponseEntity<Object> saveVehicle(@RequestBody @Valid VehicleDto vehicleDto) {
+        if (!riderService.existsById(vehicleDto.riderId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Rider ID is invalid or not found.");
+        }
         var vehicle = new VehicleModel();
-        VehicleFactory.convertToModel(vehicleDto, vehicle);
+        vehicleFactory.convertToModel(vehicleDto, vehicle);
         var savedVehicle = service.save(vehicle);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedVehicle);
     }
+
 
     @GetMapping("/vehicle")
     public ResponseEntity<List<VehicleModel>> getAll(){
@@ -61,7 +74,7 @@ public class VehicleController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle not found.");
         }
         var vehicleModel = service.findById(id);
-        VehicleFactory.convertToModel(vehicleDto, vehicleModel);
+        vehicleFactory.convertToModel(vehicleDto, vehicleModel);
         var updatedVehicle = service.update(vehicleModel);
         return ResponseEntity.status(HttpStatus.OK).body(updatedVehicle);
     }
