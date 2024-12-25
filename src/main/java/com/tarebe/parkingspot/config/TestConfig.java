@@ -42,7 +42,11 @@ public class TestConfig implements CommandLineRunner {
         VehicleModel vehicleModel2 = new VehicleModel(null, VehicleType.MOTORCYCLE, "TAR-224", riderModel1);
 
         riderRepository.save(riderModel0);
+        vehicleModel0.setRider(riderModel0);
+        riderModel0.setParkingSpot(parkingSpotModel0);
+        riderModel0.getVehicles().add(vehicleModel0);
         parkingSpotModel0.setRider(riderModel0);
+
 
 
         parkingSpotRepository.save(parkingSpotModel0);
