@@ -1,5 +1,6 @@
 package com.tarebe.parkingspot.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tarebe.parkingspot.models.enums.ParkingSpotStatus;
 import com.tarebe.parkingspot.models.enums.ParkingSpotType;
 import jakarta.persistence.*;
@@ -15,10 +16,13 @@ public class ParkingSpotModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
-
     private ParkingSpotStatus status;
     private ParkingSpotType type;
+
+    @OneToOne
+    @JoinColumn(name = "rider_parkingspot_id")
+    @JsonIgnoreProperties("parkingSpot")
+    private RiderModel rider;
 
     public ParkingSpotModel() {
     }
@@ -55,5 +59,13 @@ public class ParkingSpotModel implements Serializable {
 
     public void setType(ParkingSpotType type) {
         this.type = type;
+    }
+
+    public RiderModel getRider() {
+        return rider;
+    }
+
+    public void setRider(RiderModel rider) {
+        this.rider = rider;
     }
 }

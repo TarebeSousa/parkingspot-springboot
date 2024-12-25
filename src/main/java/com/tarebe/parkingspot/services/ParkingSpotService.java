@@ -49,5 +49,9 @@ public class ParkingSpotService {
         return obj.get();
     }
 
+    public ParkingSpotModel associateToRider(ParkingSpotModel parkingSpotModel){
+        return repository.save(parkingSpotModel);
+    }
+
 
 }

@@ -25,6 +25,10 @@ public class RiderModel implements Serializable {
     @OneToMany(mappedBy = "rider", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<VehicleModel> vehicles = new ArrayList<>();
 
+    @JsonIgnoreProperties("rider")
+    @OneToOne(mappedBy = "rider", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private ParkingSpotModel parkingSpot;
+
     public RiderModel(UUID id, String name, String cnh) {
         this.id = id;
         this.name = name;
@@ -61,5 +65,13 @@ public class RiderModel implements Serializable {
 
     public List<VehicleModel> getVehicles() {
         return vehicles;
+    }
+
+    public ParkingSpotModel getParkingSpot() {
+        return parkingSpot;
+    }
+
+    public void setParkingSpot(ParkingSpotModel parkingSpot) {
+        this.parkingSpot = parkingSpot;
     }
 }
