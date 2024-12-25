@@ -29,6 +29,26 @@ public class TestConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        ParkingSpotModel parkingSpotModel0 = new ParkingSpotModel(null, ParkingSpotStatus.OCCUPIED, ParkingSpotType.MOTORCYCLE);
+        ParkingSpotModel parkingSpotModel1 = new ParkingSpotModel(null, ParkingSpotStatus.FREE, ParkingSpotType.CAR);
+        ParkingSpotModel parkingSpotModel2 = new ParkingSpotModel(null, ParkingSpotStatus.OCCUPIED, ParkingSpotType.TRUCK);
+
+        RiderModel riderModel0 = new RiderModel(null, "João Claudio", "123456789");
+        RiderModel riderModel1 = new RiderModel(null, "Maria Josefa", "125489657");
+        RiderModel riderModel2 = new RiderModel(null, "Luana Melo", "324578950");
+
+        VehicleModel vehicleModel0 = new VehicleModel(null, VehicleType.TRUCK, "WBX-325", riderModel0);
+        VehicleModel vehicleModel1 = new VehicleModel(null, VehicleType.CAR, "CQC-745", riderModel1);
+        VehicleModel vehicleModel2 = new VehicleModel(null, VehicleType.MOTORCYCLE, "TAR-224", riderModel1);
+
+        riderRepository.save(riderModel0);
+        parkingSpotModel0.setRider(riderModel0);
+
+
+        parkingSpotRepository.save(parkingSpotModel0);
+        parkingSpotRepository.save(parkingSpotModel1);
+        parkingSpotRepository.save(parkingSpotModel2);
+
 
     }
 }
